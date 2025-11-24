@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>P5.js 작품 포트폴리오 - 최원석 20192932</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .project-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+        }
+
+        .project-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .project-header h2 {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+        }
+
+        .project-header p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .canvas-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 66.67%; /* 600:400 비율 */
+            background: #f5f5f5;
+        }
+
+        .canvas-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        footer {
+            text-align: center;
+            color: white;
+            margin-top: 40px;
+            padding: 20px;
+        }
+
+        footer a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 10px 20px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 25px;
+            transition: background 0.3s ease;
+        }
+
+        footer a:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        @media (max-width: 968px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎨 P5.js 작품 포트폴리오</h1>
+            <p class="subtitle">최원석 (20192932) - 인터랙티브 미디어 과제</p>
+        </header>
+
+        <div class="grid">
+            <!-- 과제 1 -->
+            <div class="project-card">
+                <div class="project-header">
+                    <h2>과제 1: 우주와 바다의 경계</h2>
+                    <p>정적 그래픽 - 기하학적 형태와 색상 조합</p>
+                </div>
+                <div class="canvas-container">
+                    <iframe src="project1.html"></iframe>
+                </div>
+            </div>
+
+            <!-- 과제 4 -->
+            <div class="project-card">
+                <div class="project-header">
+                    <h2>과제 4: 움직이는 우주와 바다</h2>
+                    <p>애니메이션 - 시간의 흐름을 담은 작품</p>
+                </div>
+                <div class="canvas-container">
+                    <iframe src="project4.html"></iframe>
+                </div>
+            </div>
+
+            <!-- 과제 2 -->
+            <div class="project-card">
+                <div class="project-header">
+                    <h2>과제 2: 캐리커처 초상화</h2>
+                    <p>정적 캐릭터 - 기하학적 형태로 표현한 인물</p>
+                </div>
+                <div class="canvas-container">
+                    <iframe src="project2.html"></iframe>
+                </div>
+            </div>
+
+            <!-- 과제 3 -->
+            <div class="project-card">
+                <div class="project-header">
+                    <h2>과제 3: 인터랙티브 캐리커처</h2>
+                    <p>인터랙션 - 마우스와 키보드로 조작 가능</p>
+                </div>
+                <div class="canvas-container">
+                    <iframe src="project3.html"></iframe>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>© 2024 최원석 (20192932) | 숭실대학교 인터랙티브 미디어 과제</p>
+            <p style="margin-top: 10px;">
+                <a href="https://github.com" target="_blank">GitHub Repository →</a>
+            </p>
+        </footer>
+    </div>
+</body>
+</html>

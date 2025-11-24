@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>과제 2 - 캐리커처 초상화</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: #f0f0f0;
+        }
+        main {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <main></main>
+    <script>
+const cfg = {
+  x: 300, y: 210, s: 1.0,
+  skin: '#F4C9AB', hair: '#2b2b2b', eye: '#222', eyebrow: '#191919',
+  mouth: '#cc4b4b', shirt: '#151516', bg: '#f7f7fb',
+  glasses: false, beanie: false
+};
+
+function setup() {
+  createCanvas(600, 400);
+  angleMode(DEGREES);
+  noLoop();
+}
+
+function draw() {
+  background(cfg.bg);
+  drawCaricature(cfg);
+}
+
+function drawCaricature(o) {
+  push();
+  translate(o.x, o.y);
+  scale(o.s);
+  drawShirt(0, 120, 220, 120, o.shirt);
+  drawHead(0, 0, 180, 210, o.skin, 0.30);
+  drawEars(-95, 10, 18, o.skin);
+  drawEars(95, 10, 18, o.skin);
+  drawHair(0, -50, 210, o.hair);
+  drawEyebrows(-42, -30, 38, o.eyebrow, 'long');
+  drawEyebrows(42, -30, 38, o.eyebrow, 'long');
+  drawEyes(-40, -5, 18, o.eye);
+  drawEyes(40, -5, 18, o.eye);
+  drawNose(0, 20);
+  drawMouth(0, 55, 42, o.mouth);
+  pop();
+}
+
+function drawHead(cx, cy, w, h, skin, sharp = 0.30) {
+  push();
+  translate(cx, cy);
+  const topY = -h * 0.18, topArcY = -h * 0.52, templeX = w * 0.42, chinY = h * 0.55;
+  const jawIn = w * 0.26, cheekX = w * 0.65, cheekY = 0, jawY = h * 0.52;
+  noStroke(); fill(skin);
+  beginShape();
+  vertex(-templeX, topY);
+  bezierVertex(-w * 0.25, topArcY,  w * 0.25, topArcY,  templeX, topY);
+  bezierVertex( cheekX, cheekY,  jawIn, jawY,  0, chinY);
+  bezierVertex(-jawIn, jawY, -cheekX, cheekY, -templeX, topY);
+  endShape(CLOSE);
+  noFill(); stroke(0, 35); strokeWeight(2);
+  bezier(jawIn * -0.9, jawY * 0.98, -jawIn * 0.5, jawY + 10, jawIn * 0.5, jawY + 10, jawIn * 0.9, jawY * 0.98);
+  pop();
+}
+
+function drawEars(x, y, r, skin) {
+  push();
+  noStroke(); fill(skin);
+  ellipse(x, y, r * 1.4, r * 1.8);
+  noFill(); stroke(0, 30); strokeWeight(1.5);
+  arc(x, y, r * 1.0, r * 1.2, 290, 70);
+  pop();
+}
+
+function drawHair(cx, cy, w, colorHair) {
+  push();
+  noStroke(); fill(colorHair);
+  arc(cx, cy+7, w, w * 0.85, 165, 375);
+  pop();
+}
+
+function drawEyebrows(x, y, len, colorBrow, style = 'long') {
+  push();
+  stroke(colorBrow); strokeWeight(6); strokeCap(ROUND);
+  const tilt = style === 'long' ? 5 : 5;
+  line(x - len / 2, y - tilt / 2, x + len / 2, y + tilt / 2);
+  pop();
+}
+
+function drawEyes(x, y, r, eyeColor) {
+  push();
+  noStroke(); fill(255);
+  ellipse(x, y, r * 2.1, r * 1.2);
+  fill(eyeColor);
+  ellipse(x, y, r * 0.9, r * 0.9);
+  fill(255);
+  ellipse(x - r * 0.2, y - r * 0.2, r * 0.22, r * 0.22);
+  pop();
+}
+
+function drawNose(cx, cy) {
+  push();
+  stroke(60, 50); strokeWeight(2);
+  line(cx, cy - 8, cx - 4, cy + 10);
+  arc(cx - 2, cy + 12, 14, 8, 20, 170);
+  pop();
+}
+
+function drawMouth(cx, cy, w, colorLip) {
+  push();
+  noFill(); stroke(colorLip); strokeWeight(4);
+  arc(cx, cy, w, w * 0.6, 10, 170);
+  pop();
+}
+
+function drawShirt(cx, cy, w, h, colorShirt) {
+  push();
+  noStroke(); fill(colorShirt);
+  rect(cx - w / 2, cy -14, w, h, 40);
+  pop();
+}
+    </script>
+</body>
+</html>

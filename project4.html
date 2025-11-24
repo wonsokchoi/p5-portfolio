@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>과제 4 - 움직이는 우주와 바다</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: #f0f0f0;
+        }
+        main {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <main></main>
+    <script>
+let t=0, stars=[[60,48],[110,36],[160,74],[210,28],[260,64],[320,42],[360,86],[410,34],[470,70],[530,26],[585,58],[300,22],[380,18],[445,12]];
+
+function setup(){
+  pixelDensity(1);
+  createCanvas(600,400);
+  colorMode(HSB,360,100,100,100);
+  frameRate(12);
+}
+
+function draw(){
+  let h=(200+40*sin(t*0.5))%360, h2=(240+80*sin(t*0.25+1.2))%360;
+  background(220,80,10);
+
+  noStroke();fill(h2,50,50,60);rect(0,0,width,height*0.55);
+  fill(h,50,40,50);rect(width*0.35,0,width*0.75,height);
+
+  noStroke();fill(0,0,0,40);ellipse(-100,420,900,520);
+  fill(45,80,80,40+20*sin(t*0.6));ellipse(700,120+8*sin(t*0.6),520,260);
+
+  fill(20,70,90,35);ellipse(440,120,160+10*sin(t),160+10*sin(t));
+  fill(15,60,85,25);ellipse(440,120,210+14*sin(t*0.7),140+10*sin(t*0.7));
+  fill(10,55,80,18);ellipse(440,120,260+18*sin(t*0.5),120+8*sin(t*0.5));
+
+  noStroke();
+  for(let i=0;i<stars.length;i++){
+    let a=70+30*sin(t*1.2+i);
+    fill(0,0,100,a);
+    ellipse(stars[i][0],stars[i][1],2.2+0.8*sin(t+i*0.7),2.2+0.8*sin(t+i*0.7));
+  }
+
+  stroke(220,20,95,50);strokeWeight(2);
+  line(60,48,110,36);line(110,36,160,74);line(210,28,260,64);
+  line(320,42,360,86);line(410,34,470,70);line(470,70,530,26);
+
+  noStroke();fill(195,70,30);rect(0,200,width,200);
+  fill(190,55,45,92);rect(0,200,width,90+12*sin(t*0.8));
+  fill(185,45,60,80);rect(0,200,width,45+8*sin(t*0.8+0.6));
+
+  fill(200,10,100,28);
+  ellipse(120,230+6*sin(t*0.9),220+16*sin(t*0.9),24+4*sin(t*0.9));
+  ellipse(300,250+6*sin(t*0.7+0.6),300+20*sin(t*0.7+0.6),28+3*sin(t*0.7+0.6));
+  ellipse(480,230+6*sin(t*0.85+1.2),260+16*sin(t*0.85+1.2),22+3*sin(t*0.85+1.2));
+  ellipse(360,285+6*sin(t*0.65+0.3),340+22*sin(t*0.65+0.3),32+4*sin(t*0.65+0.3));
+  ellipse(170,315+6*sin(t*0.75+0.9),260+18*sin(t*0.75+0.9),26+4*sin(t*0.75+0.9));
+  ellipse(460,330+6*sin(t*0.78+1.4),300+20*sin(t*0.78+1.4),28+4*sin(t*0.78+1.4));
+
+  fill(h2,50,45,70);ellipse(180,250+5*sin(t*0.6),180+12*sin(t*0.6),90+6*sin(t*0.6));
+  fill(185,45,60,80);ellipse(420,120+6*sin(t*0.5),140+10*sin(t*0.5),70+5*sin(t*0.5));
+
+  stroke(210,10,100,70);strokeWeight(3);line(0,200,width,200);
+  noStroke();fill(210,10,100,20);triangle(260,198,340,198,300,206+2*sin(t*1.3));
+
+  noFill();stroke(0,0,100,25);strokeWeight(10);rect(8,8,width-16,height-16);
+
+  t+=0.1;
+}
+    </script>
+</body>
+</html>

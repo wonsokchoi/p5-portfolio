@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>과제 3 - 인터랙티브 캐리커처</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: #f0f0f0;
+        }
+        main {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <main></main>
+    <script>
+const cfg = {
+  x: 300, y: 210, s: 1.0,
+  skin: '#F4C9AB', hair: '#2b2b2b', eye: '#222', eyebrow: '#191919',
+  mouth: '#cc4b4b', shirt: '#151516', bgHue: 240, glasses: false, beanie: false
+};
+
+let breathing = 0, blinkTimer = 0, isBlinking = false, blinkFrame = 0;
+let mouthOpen = 0, talking = false, dragging = false, dragDX = 0, dragDY = 0;
+
+function setup() {
+  pixelDensity(1);
+  createCanvas(600, 400);
+  colorMode(HSB, 360, 100, 100, 100);
+  frameRate(12);
+  angleMode(DEGREES);
+  resetBlinkTimer();
+}
+
+function draw() {
+  background(cfg.bgHue % 360, 12, 98);
+  breathing = sin(frameCount * 3) * 1.8;
+  updateBlink();
+  drawCaricature();
+}
+
+function drawCaricature() {
+  push();
+  translate(cfg.x, cfg.y + breathing);
+  scale(cfg.s);
+  drawShirt(0, 120, 220, 120, cfg.shirt);
+  drawHead(0, 0, 180, 210, cfg.skin, 0.30);
+  drawEars(-95, 10, 18, cfg.skin);
+  drawEars(95, 10, 18, cfg.skin);
+  drawHair(0, -50, 210, cfg.hair);
+  drawEyebrows(-42, -30, 38, cfg.eyebrow, 'long');
+  drawEyebrows(42, -30, 38, cfg.eyebrow, 'long');
+  drawEyes(-40, -5, 18, cfg.eye);
+  drawEyes(40, -5, 18, cfg.eye);
+  drawNose(0, 20);
+  let mOpen = talking ? 0.35 + 0.25 * (sin(frameCount * 18) * 0.5 + 0.5) : mouthOpen;
+  drawMouth(0, 55, 42, cfg.mouth, mOpen);
+  if (cfg.glasses) drawGlasses(0, -5, 64, '#111');
+  if (cfg.beanie) drawBeanie(0, -118, 210, '#111827', '#8b5cf6');
+  pop();
+}
+
+function drawHead(cx, cy, w, h, skin, sharp = 0.30) {
+  push();
+  translate(cx, cy);
+  const topY = -h * 0.18, topArcY = -h * 0.52, templeX = w * 0.42, chinY = h * 0.55;
+  const jawIn = w * 0.26, cheekX = w * 0.65, cheekY = 0, jawY = h * 0.52;
+  noStroke(); fill(skin);
+  beginShape();
+  vertex(-templeX, topY);
+  bezierVertex(-w * 0.25, topArcY,  w * 0.25, topArcY,  templeX, topY);
+  bezierVertex( cheekX, cheekY,  jawIn, jawY,  0, chinY);
+  bezierVertex(-jawIn, jawY, -cheekX, cheekY, -templeX, topY);
+  endShape(CLOSE);
+  noFill(); stroke(0, 0, 0, 35); strokeWeight(2);
+  bezier(jawIn * -0.9, jawY * 0.98, -jawIn * 0.5, jawY + 10, jawIn * 0.5, jawY + 10, jawIn * 0.9, jawY * 0.98);
+  pop();
+}
+
+function drawEars(x, y, r, skin) {
+  push();
+  noStroke(); fill(skin);
+  ellipse(x, y, r * 1.4, r * 1.8);
+  noFill(); stroke(0, 0, 0, 30); strokeWeight(1.5);
+  arc(x, y, r * 1.0, r * 1.2, 290, 70);
+  pop();
+}
+
+function drawHair(cx, cy, w, colorHair) {
+  push();
+  noStroke(); fill(colorHair);
+  const sway = sin(frameCount * 3 + 90) * 1.2;
+  arc(cx, cy + 7 + sway, w, w * 0.85, 165, 375);
+  pop();
+}
+
+function drawEyebrows(x, y, len, colorBrow) {
+  push();
+  stroke(colorBrow); strokeWeight(6); strokeCap(ROUND);
+  const tilt = 5;
+  line(x - len / 2, y - tilt / 2, x + len / 2, y + tilt / 2);
+  pop();
+}
+
+function drawEyes(x, y, r, eyeColor) {
+  push();
+  noStroke(); fill(0, 0, 100);
+  let sclW = r * 2.1, sclH = r * 1.2;
+  if (isBlinking) {
+    const k = max(0.1, 1 - (abs(blinkFrame - 3) / 3));
+    sclH = sclH * k;
+  }
+  ellipse(x, y, sclW, sclH);
+  const dirX = (mouseX - (cfg.x + x * cfg.s)) / max(1, width);
+  const dirY = (mouseY - (cfg.y + y * cfg.s)) / max(1, height);
+  const offX = constrain(dirX * r * 0.7, -r * 0.35, r * 0.35);
+  const offY = constrain(dirY * r * 0.7, -r * 0.35, r * 0.35);
+  fill(eyeColor);
+  ellipse(x + offX, y + offY, r * 0.9, r * 0.9);
+  fill(0, 0, 100);
+  ellipse(x + offX - r * 0.2, y + offY - r * 0.2, r * 0.22, r * 0.22);
+  pop();
+}
+
+function drawNose(cx, cy) {
+  push();
+  stroke(0, 0, 0, 50); strokeWeight(2);
+  line(cx, cy - 8, cx - 4, cy + 10);
+  arc(cx - 2, cy + 12, 14, 8, 20, 170);
+  pop();
+}
+
+function drawMouth(cx, cy, w, colorLip, open01) {
+  push();
+  noFill(); stroke(colorLip); strokeWeight(4);
+  const hh = lerp(w * 0.6, w * 1.2, constrain(open01, 0, 1));
+  const a0 = lerp(10, -5, open01);
+  const a1 = lerp(170, 185, open01);
+  arc(cx, cy, w, hh, a0, a1);
+  pop();
+}
+
+function drawShirt(cx, cy, w, h, colorShirt) {
+  push();
+  noStroke(); fill(colorShirt);
+  rect(cx - w / 2, cy - 14, w, h, 40);
+  pop();
+}
+
+function drawGlasses(cx, cy, w, col) {
+  push();
+  noFill(); stroke(col); strokeWeight(4);
+  const g = w;
+  rect(cx - g - 8, cy - g * 0.35, g, g * 0.7, 10);
+  rect(cx + 8,      cy - g * 0.35, g, g * 0.7, 10);
+  line(cx - 8, cy, cx + 8, cy);
+  pop();
+}
+
+function drawBeanie(cx, cy, w, body, lineCol) {
+  push();
+  noStroke(); fill(body);
+  arc(cx, cy, w, w * 0.66, 180, 360);
+  fill(lineCol);
+  rect(cx - w * 0.5, cy - 10, w, 22, 6);
+  pop();
+}
+
+function updateBlink() {
+  if (isBlinking) {
+    blinkFrame++;
+    if (blinkFrame >= 6) { isBlinking = false; blinkFrame = 0; resetBlinkTimer(); }
+    return;
+  }
+  blinkTimer--;
+  if (blinkTimer <= 0) { isBlinking = true; blinkFrame = 0; }
+}
+
+function resetBlinkTimer() { blinkTimer = int(random(10, 36)); }
+
+function mousePressed() {
+  mouthOpen = mouthOpen < 0.5 ? 1 : 0;
+  if (mouseX > 0 && mouseX < width && mouseY > 0 && mouseY < height) {
+    dragging = true; dragDX = mouseX - cfg.x; dragDY = mouseY - cfg.y;
+  }
+}
+
+function mouseDragged() {
+  if (dragging) {
+    cfg.x = mouseX - dragDX;
+    cfg.y = mouseY - dragDY;
+  }
+}
+
+function mouseReleased() { dragging = false; }
+
+function doubleClicked() { cfg.beanie = !cfg.beanie; }
+    </script>
+</body>
+</html>

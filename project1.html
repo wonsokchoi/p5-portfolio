@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>과제 1 - 우주와 바다의 경계</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: #f0f0f0;
+        }
+        main {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <main></main>
+    <script>
+function setup() {
+  createCanvas(600, 400);
+  noLoop();
+}
+
+function draw() {
+  const deepSpace = color(12, 16, 38);
+  const nebula1   = color(62, 46, 120, 160);
+  const nebula2   = color(24, 88, 176, 140);
+  const seaDeep   = color(5, 42, 60);
+  const seaMid    = color(14, 89, 117, 200);
+  const seaTop    = color(40, 140, 170, 180);
+  const foam      = color(240, 250, 255, 70);
+  const glow      = color(255, 210, 120, 80);
+  const starlight = color(245, 245, 255);
+  const lineCol   = color(220, 230, 255, 110);
+
+  background(deepSpace);
+
+  noStroke();
+  fill(nebula2); rect(0, 0, width, height * 0.55);
+  fill(nebula1); rect(width * 0.35, 0, width * 0.75, height);
+
+  noStroke();
+  fill(0, 0, 0, 40);  ellipse(-100, 420, 900, 520);
+  fill(glow);         ellipse(700, 120, 520, 260);
+
+  noStroke();
+  fill(255, 200, 160, 40); ellipse(440, 120, 160, 160);
+  fill(240, 170, 140, 30);  ellipse(440, 120, 210, 140);
+  fill(220, 140, 110, 20);  ellipse(440, 120, 260, 120);
+
+  noStroke();
+  fill(starlight);
+  const stars = [
+    [60, 48],[110, 36],[160, 74],[210, 28],[260, 64],
+    [320, 42],[360, 86],[410, 34],[470, 70],[530, 26],
+    [585, 58],[300, 22],[380, 18],[445, 12]
+  ];
+  for (const [x, y] of stars) ellipse(x, y, 3, 3);
+
+  stroke(lineCol); strokeWeight(2);
+  line(60,48,110,36); line(110,36,160,74); line(210,28,260,64);
+  line(320,42,360,86); line(410,34,470,70); line(470,70,530,26);
+
+  noStroke();
+  fill(seaDeep); rect(0, 200, width, 200);
+  fill(seaMid);  rect(0, 200, width, 90);
+  fill(seaTop);  rect(0, 200, width, 45);
+
+  fill(foam);
+  ellipse(120, 230, 220, 26);
+  ellipse(300, 250, 300, 30);
+  ellipse(480, 230, 260, 24);
+  ellipse(360, 285, 340, 34);
+  ellipse(170, 315, 260, 28);
+  ellipse(460, 330, 300, 30);
+
+  fill(nebula2); ellipse(180, 250, 180, 90);
+  fill(seaTop);  ellipse(420, 120, 140, 70);
+
+  stroke(220, 240, 255, 140); strokeWeight(3);
+  line(0, 200, width, 200);
+  noStroke(); fill(220, 240, 255, 30);
+  triangle(260, 198, 340, 198, 300, 206);
+
+  noFill(); stroke(255, 255, 255, 40); strokeWeight(10);
+  rect(8, 8, width - 16, height - 16);
+}
+    </script>
+</body>
+</html>
