@@ -1,0 +1,48 @@
+=====================================
+🎯 GitHub Pages 배포 - 다음 단계
+=====================================
+
+✅ 완료된 작업:
+- 포트폴리오 웹사이트 제작 완료
+- Git 저장소 초기화 완료
+- 모든 파일 준비 완료
+
+📝 이제 해야 할 일:
+
+1️⃣ GitHub 저장소 만들기
+   → https://github.com 접속
+   → 오른쪽 상단 "+" 버튼 → "New repository"
+   → 저장소 이름: p5-portfolio
+   → Public으로 설정! (중요!)
+   → "Create repository" 클릭
+
+2️⃣ 터미널에서 명령어 실행
+   (YOUR_USERNAME을 본인 GitHub 아이디로 변경!)
+
+   cd /Users/wondoll/Desktop/p5
+   git remote add origin https://github.com/YOUR_USERNAME/p5-portfolio.git
+   git push -u origin main
+
+   → Username과 Password(또는 Token) 입력
+
+3️⃣ GitHub Pages 활성화
+   → GitHub 저장소 페이지 → Settings
+   → 왼쪽 메뉴 "Pages" 클릭
+   → Source: Branch "main", Folder "/ (root)" 선택
+   → Save 클릭
+
+4️⃣ 배포 확인
+   → 1-2분 후 다음 주소에서 확인:
+   https://YOUR_USERNAME.github.io/p5-portfolio/
+
+5️⃣ LMS에 제출
+   → 위 URL을 복사하여 LMS 과제란에 제출!
+
+=====================================
+
+💡 도움말:
+- 자세한 설명은 DEPLOYMENT_GUIDE.md 파일 참고
+- Personal Access Token이 필요할 수 있음
+  (GitHub → Settings → Developer settings)
+
+🎉 화이팅!
